@@ -1,59 +1,62 @@
 import sys
-from PyQt5.QtWidgets import QApplication,QMainWindow,QLabel,QPushButton,QVBoxLayout,QWidget,QAction,QMenuBar,QDialog
+from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QPushButton, QVBoxLayout, QWidget, QAction, QMenuBar, QDialog
 
-class secondwindow(QDialog):
+
+class SecondWindow(QDialog):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("second window")
-        self.setGeometry(200,200,400,400)
-        layout=QVBoxLayout()
-        label=QLabel("it is second window")
+        self.setWindowTitle("Second Window")
+        self.setGeometry(200, 200, 300, 200)
+
+        layout = QVBoxLayout()
+        label = QLabel("This is the second window", self)
         layout.addWidget(label)
         self.setLayout(layout)
 
-class Mywindow(QMainWindow):
+class MyWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("PYQT")
-        self.setGeometry(200,100,400,400)
+        self.setWindowTitle("PyQt Example")
+        self.setGeometry(100, 100, 400, 300)
 
-        self.central_Widget=QWidget()
-        self.setCentralWidget(self.central_Widget)
+        self.central_widget = QWidget()
+        self.setCentralWidget(self.central_widget)
 
-        self.layout=QVBoxLayout()
-        self.central_Widget.setLayout(self.layout)
+        self.layout = QVBoxLayout()
+        self.central_widget.setLayout(self.layout)
 
-        self.Label=QLabel("Hello,Panda!",self)
-        self.layout.addWidget(self.Label)
+        self.label = QLabel("Hello, PyQt!", self)
+        self.layout.addWidget(self.label)
 
-        self.button=QPushButton("click here",self)
+        self.button = QPushButton("Click Me", self)
         self.layout.addWidget(self.button)
         self.button.clicked.connect(self.on_button_click)
 
         self.init_menu()
 
     def init_menu(self):
-        menubar=self.menuBar()
+        menubar = self.menuBar()
 
-        file_menu=menubar.addMenu("File")
-        exit_action=QAction("Exit",self)
+        file_menu = menubar.addMenu("File")
+        file_menu = menubar.addMenu("About")
+        exit_action = QAction("Exit", self)
         exit_action.triggered.connect(self.close)
         file_menu.addAction(exit_action)
-        view_menu=menubar.addMenu("view")
-        second_window_action=QAction("open second window",self)
+
+        view_menu = menubar.addMenu("View")
+        second_window_action = QAction("Open Second Window", self)
         second_window_action.triggered.connect(self.open_second_window)
         view_menu.addAction(second_window_action)
-    
+
     def open_second_window(self):
-        self.second_window=secondwindow()
+        self.second_window = SecondWindow()
         self.second_window.exec_()
 
     def on_button_click(self):
-        self.label.setText("Button Clicked!")
-
-    
-if __name__=="__main__" :
-    app=QApplication(sys.argv)
-    window=Mywindow()
+        self.label.setText("Button clicked!")
+        
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = MyWindow()
     window.show()
     sys.exit(app.exec_())
